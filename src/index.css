@@ -1,13 +1,63 @@
-body {
+* {
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@import url("https://fonts.googleapis.com/css2?family=Orbitron&display=swap");
+
+.click-container {
+  background-color: #339af0;
+  width: 100%;
+  height: 420px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reaction-text {
+  font-family: "Orbitron", sans-serif;
+
+  padding: 120px;
+  text-align: center;
+}
+
+.title {
+  font-size: 70px;
+}
+
+.instructions {
+  margin-top: 15px;
+  font-size: 20px;
+}
+
+.data-container {
+  background-color: #ced4da;
+  height: 700px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.data-flex {
+  margin-top: 40px;
+
+  height: 700px;
+  width: 1200px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.data-boxes {
+  border-radius: 20px;
+  background-color: white;
+  height: 640px;
+  width: 560px;
+  box-shadow: 0 20px 30px 0 black;
+}
+
+.chart-container {
+}
+
+.stats-container {
 }
