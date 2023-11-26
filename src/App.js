@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import Data from "./data";
+
 export default function App() {
   return <Game />;
 }
@@ -120,6 +122,7 @@ function Game() {
           scores={scores}
         />
       )}
+      <Data />
     </>
   );
 }
@@ -212,7 +215,7 @@ function DisplayScore({ onhandledisplayscore, score, scores }) {
   return (
     <div
       className="display-score"
-      style={{ backgroundColor: "green" }}
+      style={{ backgroundColor: "#40c057" }}
       onClick={onhandledisplayscore}
     >
       <div className="reaction-text">
