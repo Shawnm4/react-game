@@ -221,9 +221,9 @@ function DisplayScore({ onhandledisplayscore, score, scores }) {
       <div className="reaction-text">
         <div>
           <div className="title">Your Score </div>
-          <div className="new-score">{score}</div>
+          <div className="new-score">{score}ms</div>
           <div className="highscore-text">Highscore</div>
-          <div className="highscore">{highscore}</div>
+          <div className="highscore">{highscore}ms</div>
         </div>
       </div>
     </div>

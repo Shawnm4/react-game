@@ -53,13 +53,14 @@
 .data-boxes {
   border-radius: 20px;
   background-color: white;
-  height: 640px;
+  height: 400px;
   width: 560px;
   box-shadow: 0 20px 30px 0 black;
   display: grid;
   justify-content: center;
-  grid-template-rows: 60px;
-  gap: 10px;
+  /* grid-template-rows: 30px;
+  gap: 10px; */
+  grid-template-rows: 100px 130px 280px;
 }
 
 .chart-container {
@@ -71,6 +72,13 @@
   font-size: 40px;
   display: flex;
   gap: 30px;
+  justify-content: center;
+}
+
+.stats-paragraph {
+  font-family: "Play", sans-serif;
+  margin-top: 30px;
+  font-size: 25px;
 }
 
 .scores-text-container {
