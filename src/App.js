@@ -23,8 +23,14 @@ function Game() {
   const [startState, setStartState] = useState(0);
   const [endState, setEndState] = useState(0);
 
+  if (!localStorage.getItem("scores2")) {
+    localStorage.setItem("scores2", JSON.stringify([]));
+  }
   //Scores
-  const [scores, setScores] = useState([]);
+  const [scores, setScores] = useState(
+    JSON.parse(localStorage.getItem("scores2"))
+  );
+
   const [score, setScore] = useState(null);
 
   function beforeGameHandler() {
@@ -66,9 +72,16 @@ function Game() {
   //   // }, 2000);
   // }
 
+  function handleScores(newScore) {
+    setScores((prevScore) => {
+      const updatedScores = [...prevScore, newScore];
+      localStorage.setItem("scores2", JSON.stringify(updatedScores));
+      return updatedScores;
+    });
+  }
+
   function handleEndTime() {
     const endTime = performance.now();
-    // setEndState(endTime - startState);
     const score = +(endTime - startState).toFixed(0);
     setDuringGame((s) => false);
     setDisplayScore(true);
@@ -76,7 +89,8 @@ function Game() {
       score,
       date: new Date(),
     };
-    setScores((scores) => [newScore, ...scores]);
+    console.log(newScore);
+    handleScores(newScore);
     setScore(newScore.score);
   }
 
@@ -100,7 +114,11 @@ function Game() {
       {afterGame && <AfterGameEnds />}
       {clickedEarly && <ClickedToEarly />}
       {displayScore && (
-        <DisplayScore onhandledisplayscore={handleDisplayScore} score={score} />
+        <DisplayScore
+          onhandledisplayscore={handleDisplayScore}
+          score={score}
+          scores={scores}
+        />
       )}
     </>
   );
@@ -183,7 +201,14 @@ function ClickedToEarly({ clickToEarly, timer }) {
   );
 }
 
-function DisplayScore({ onhandledisplayscore, score }) {
+function DisplayScore({ onhandledisplayscore, score, scores }) {
+  console.log(scores);
+  const highscore = scores.reduce((acc, cur) => {
+    if (cur.score > acc) return acc;
+    else return cur.score;
+  }, scores.at(0));
+  console.log(highscore);
+
   return (
     <div
       className="display-score"
@@ -195,7 +220,7 @@ function DisplayScore({ onhandledisplayscore, score }) {
           <div className="title">Your Score </div>
           <div className="new-score">{score}</div>
           <div className="highscore-text">Highscore</div>
-          <div className="highscore">X</div>
+          <div className="highscore">{highscore}</div>
         </div>
       </div>
     </div>
