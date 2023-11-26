@@ -89,7 +89,7 @@ function Game() {
     setDisplayScore(true);
     const newScore = {
       score,
-      date: new Date(),
+      date: new Date().toLocaleString(),
     };
     console.log(newScore);
     handleScores(newScore);
@@ -122,7 +122,7 @@ function Game() {
           scores={scores}
         />
       )}
-      <Data />
+      <Data scores={scores} />
     </>
   );
 }
