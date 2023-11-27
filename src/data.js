@@ -2,19 +2,33 @@ import QuickChart from "quickchart-js";
 
 export default function Data({ scores }) {
   const scoresNums = scores.map((scores) => scores.score);
-  console.log(scoresNums);
+
+  const numbers = scores.map((score) => []);
+
   const myChart = new QuickChart();
   myChart
     .setConfig({
       type: "line",
 
       options: {
+        scales: {
+          yAxes: [
+            {
+              // display: false,
+              ticks: {
+                min: 50,
+                max: 2000,
+                stepSize: 50, // Set the desired interval between Y-axis labels
+              },
+            },
+          ],
+        },
         legend: {
           display: true,
         },
       },
       data: {
-        labels: [],
+        labels: numbers,
         datasets: [
           {
             label: "Your Progress",
@@ -24,12 +38,14 @@ export default function Data({ scores }) {
             pointStyle: "triangle",
             pointBorderColor: "red",
             pointBackgroundColor: "red",
+            borderWidth: 2,
+            // yAxisID: "y-axis-1",
           },
         ],
       },
     })
-    .setWidth(240)
-    .setHeight(200)
+    .setWidth(270)
+    .setHeight(210)
     .setBackgroundColor("transparent");
 
   // Print the chart URL
@@ -59,7 +75,7 @@ function Stats({ time, scores }) {
       .reduce((acc, cur) => {
         return acc + cur;
       }, 0) / scores.length;
-  console.log(average);
+
   const averageGlobal = 273;
   //   const now = new Date(time).toLocaleString("en-US", {
   //     hour: "numeric",
@@ -71,17 +87,28 @@ function Stats({ time, scores }) {
     if (cur.score > acc) return acc;
     else return cur.score;
   }, scores.at(0));
-  console.log(highscore);
 
   return (
     <div>
       <div className="stats-container">
-        <div>Your Average:</div>
-        <div>{average.toFixed(0)}ms</div>
+        {average ? (
+          <>
+            <div>Your Average:</div>
+            <div>{average.toFixed(0)}ms</div>
+          </>
+        ) : (
+          ""
+        )}
       </div>
       <div className="stats-container">
-        <div>Your Highscore:</div>
-        <div>{highscore}ms</div>
+        {highscore ? (
+          <>
+            <div>Your Highscore:</div>
+            <div>{highscore}ms</div>
+          </>
+        ) : (
+          <div>Click to get started! </div>
+        )}
       </div>
     </div>
   );
@@ -94,17 +121,21 @@ function StatsDetails({ scores }) {
       .reduce((acc, cur) => {
         return acc + cur;
       }, 0) / scores.length;
-  console.log(average);
+
   return (
     <div>
-      <div className="stats-paragraph">
-        The average median reaction speed is 273ms
-        {average.toFixed(0) > 273 ? (
-          <div>Your average is higher than the global average</div>
-        ) : (
-          <div>Your average is lower than the global average!</div>
-        )}
-      </div>
+      {average ? (
+        <div className="stats-paragraph">
+          The average median reaction speed is 273ms
+          {average.toFixed(0) > 273 ? (
+            <div>Your average is higher than the global average</div>
+          ) : (
+            <div>Your average is lower than the global average!</div>
+          )}
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

@@ -16,8 +16,10 @@ function Game() {
   const [afterGame, setAfterGame] = useState(false);
   const [clickedEarly, setClickedEarly] = useState(false);
   const [displayScore, setDisplayScore] = useState(false);
+  const [displayTookToLong, setDisplayTookToLong] = useState(false);
+
   //Random time number
-  const randomNumber = Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000;
+  const randomNumber = Math.floor(Math.random() * 8001 + 2000);
 
   const [timer, setTimer] = useState(null);
 
@@ -40,6 +42,7 @@ function Game() {
     setDuringGame((s) => false);
     setAfterGame((s) => false);
     setWait4Click((s) => true);
+    setDisplayTookToLong(false);
     setTimer(
       setTimeout(() => {
         setBeforeGame((s) => false);
@@ -85,17 +88,21 @@ function Game() {
   function handleEndTime() {
     const endTime = performance.now();
     const score = +(endTime - startState).toFixed(0);
-    setDuringGame((s) => false);
-    setDisplayScore(true);
-    const newScore = {
-      score,
-      date: new Date().toLocaleString(),
-    };
-    console.log(newScore);
-    handleScores(newScore);
-    setScore(newScore.score);
+    if (score > 2000) {
+      setDisplayTookToLong(true);
+      setDuringGame(false);
+    } else {
+      setDuringGame((s) => false);
+      setDisplayScore(true);
+      const newScore = {
+        score,
+        date: new Date().toLocaleString(),
+      };
+      console.log(newScore);
+      handleScores(newScore);
+      setScore(newScore.score);
+    }
   }
-
   function handleDisplayScore() {
     setBeforeGame(true);
     setDisplayScore(false);
@@ -122,6 +129,7 @@ function Game() {
           scores={scores}
         />
       )}
+      {displayTookToLong && <TookToLong onBeforeGame={beforeGameHandler} />}
       <Data scores={scores} />
     </>
   );
@@ -224,6 +232,23 @@ function DisplayScore({ onhandledisplayscore, score, scores }) {
           <div className="new-score">{score}ms</div>
           <div className="highscore-text">Highscore</div>
           <div className="highscore">{highscore}ms</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TookToLong({ onBeforeGame }) {
+  return (
+    <div
+      className="click-container"
+      onClick={onBeforeGame}
+      style={{ backgroundColor: "#f03e3e" }}
+    >
+      <div className="reaction-text">
+        <div>
+          <div className="title">TOO SLOW</div>
+          <div className="instructions"> CLICK TO TRY AGAIN</div>
         </div>
       </div>
     </div>
