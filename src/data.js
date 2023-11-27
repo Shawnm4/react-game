@@ -1,27 +1,44 @@
-const QuickChart = require("quickchart-js");
-
-const myChart = new QuickChart();
-myChart
-  .setConfig({
-    type: "bar",
-    data: {
-      labels: ["Hello world", "Foo bar"],
-      datasets: [{ label: "Foo", data: [1, 2] }],
-    },
-  })
-  .setWidth(800)
-  .setHeight(400)
-  .setBackgroundColor("transparent");
-
-// Print the chart URL
-console.log(myChart.getUrl());
+import QuickChart from "quickchart-js";
 
 export default function Data({ scores }) {
+  const scoresNums = scores.map((scores) => scores.score);
+  console.log(scoresNums);
+  const myChart = new QuickChart();
+  myChart
+    .setConfig({
+      type: "line",
+
+      options: {
+        legend: {
+          display: true,
+        },
+      },
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: "Your Progress",
+            data: scoresNums,
+            fill: false,
+            borderColor: "red",
+            pointStyle: "triangle",
+            pointBorderColor: "red",
+            pointBackgroundColor: "red",
+          },
+        ],
+      },
+    })
+    .setWidth(240)
+    .setHeight(200)
+    .setBackgroundColor("transparent");
+
+  // Print the chart URL
+  const theChart = myChart.getUrl();
   return (
     <div className="data-container">
       <div className="data-flex">
         <div className="data-boxes">
-          <Graph />
+          <Graph myChart={myChart} theChart={theChart} />
         </div>
         <div className="data-boxes">
           <div className="scores-text-container">
@@ -92,4 +109,10 @@ function StatsDetails({ scores }) {
   );
 }
 
-function Graph() {}
+function Graph({ myChart, theChart }) {
+  return (
+    <div>
+      <img alt="chart" src={theChart} />
+    </div>
+  );
+}
