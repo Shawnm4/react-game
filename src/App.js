@@ -104,8 +104,25 @@ function Game() {
     }
   }
   function handleDisplayScore() {
-    setBeforeGame(true);
+    // setBeforeGame(true);
+    beforeGameHandler();
     setDisplayScore(false);
+  }
+
+  function resetStats() {
+    const confirmed = window.confirm(
+      "Are you sure you want to reset your stats?"
+    );
+    if (confirmed) {
+      localStorage.setItem("scores2", JSON.stringify([]));
+      setScores(JSON.parse(localStorage.getItem("scores2")));
+      setBeforeGame(true);
+      setDuringGame(false);
+      setAfterGame(false);
+      setWait4Click(false);
+      setClickedEarly(false);
+      setDisplayScore(false);
+    } else return;
   }
 
   return (
@@ -131,6 +148,7 @@ function Game() {
       )}
       {displayTookToLong && <TookToLong onBeforeGame={beforeGameHandler} />}
       <Data scores={scores} />
+      <ResetStats onReset={resetStats} />
     </>
   );
 }
@@ -233,6 +251,7 @@ function DisplayScore({ onhandledisplayscore, score, scores }) {
           <div className="highscore-text">Highscore</div>
           <div className="highscore">{highscore}ms</div>
         </div>
+        <div className="play-again">Click to play again!</div>
       </div>
     </div>
   );
@@ -251,6 +270,16 @@ function TookToLong({ onBeforeGame }) {
           <div className="instructions"> CLICK TO TRY AGAIN</div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function ResetStats({ onReset }) {
+  return (
+    <div className="reset-stats-container">
+      <button onClick={onReset} className="reset-stats">
+        Reset Stats
+      </button>
     </div>
   );
 }

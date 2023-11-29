@@ -35,7 +35,7 @@
 
 .data-container {
   background-color: #ced4da;
-  height: 700px;
+  height: 500px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -74,7 +74,9 @@
   gap: 30px;
   justify-content: center;
 }
-
+.chart {
+  margin-top: 15px;
+}
 .stats-paragraph {
   font-family: "Play", sans-serif;
   margin-top: 30px;
@@ -109,5 +111,31 @@
   font-size: 30px;
 }
 .highscore {
+  font-size: 20px;
+}
+
+.play-again {
+  margin-top: 20px;
+  font-size: 30px;
+}
+
+.reset-stats-container {
+  background-color: #ced4da;
+  display: flex;
+  justify-content: center;
+  height: 200px;
+}
+
+.reset-stats {
+  cursor: pointer;
+  margin-top: 20px;
+  font-family: "Play", sans-serif;
+  font-size: 20px;
+  width: 150px;
+  height: 40px;
+}
+
+.prog {
+  font-family: "Play", sans-serif;
   font-size: 20px;
 }

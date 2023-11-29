@@ -1,4 +1,5 @@
 import QuickChart from "quickchart-js";
+import { useState } from "react";
 
 export default function Data({ scores }) {
   const scoresNums = scores.map((scores) => scores.score);
@@ -18,13 +19,16 @@ export default function Data({ scores }) {
               ticks: {
                 min: 50,
                 max: 2000,
-                stepSize: 50, // Set the desired interval between Y-axis labels
+                stepSize: 50,
               },
             },
           ],
         },
         legend: {
-          display: true,
+          display: false,
+          labels: {
+            fontStyle: "Play, sans-serif",
+          },
         },
       },
       data: {
@@ -32,20 +36,22 @@ export default function Data({ scores }) {
         datasets: [
           {
             label: "Your Progress",
+
             data: scoresNums,
             fill: false,
             borderColor: "red",
-            pointStyle: "triangle",
+            pointStyle: "circle",
             pointBorderColor: "red",
             pointBackgroundColor: "red",
             borderWidth: 2,
+
             // yAxisID: "y-axis-1",
           },
         ],
       },
     })
     .setWidth(270)
-    .setHeight(210)
+    .setHeight(190)
     .setBackgroundColor("transparent");
 
   // Print the chart URL
@@ -142,7 +148,7 @@ function StatsDetails({ scores }) {
 
 function Graph({ myChart, theChart }) {
   return (
-    <div>
+    <div className="chart">
       <img alt="chart" src={theChart} />
     </div>
   );
